@@ -284,6 +284,9 @@ server_client_lost(struct client *c)
 	struct client_file	*cf, *cf1;
 	struct client_window	*cw, *cw1;
 
+	if (c->flags & CLIENT_ATTACHED)
+	    notify_client("client-detached", c);
+
 	c->flags |= CLIENT_DEAD;
 
 	server_client_clear_overlay(c);
@@ -1111,6 +1114,9 @@ server_client_key_callback(struct cmdq_item *item, void *data)
 	int				 xtimeout, flags;
 	struct cmd_find_state		 fs;
 	key_code			 key0;
+
+	if (key == KEYC_PASTE_START2 && strncmp(s->name, "emacs", 6))
+		key = KEYC_PASTE_START;
 
 	/* Check the client is good to accept input. */
 	if (s == NULL || (c->flags & CLIENT_UNATTACHEDFLAGS))
