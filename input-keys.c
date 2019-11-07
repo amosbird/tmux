@@ -44,6 +44,7 @@ struct input_key_ent {
 static const struct input_key_ent input_keys[] = {
 	/* Paste keys. */
 	{ KEYC_PASTE_START,	"\033[200~",	0 },
+	{ KEYC_PASTE_START2,	"\033[290~",	0 },
 	{ KEYC_PASTE_END,	"\033[201~",	0 },
 
 	/* Function keys. */
@@ -62,11 +63,11 @@ static const struct input_key_ent input_keys[] = {
 	{ KEYC_F1|KEYC_SHIFT,	"\033[25~",	0 },
 	{ KEYC_F2|KEYC_SHIFT,	"\033[26~",	0 },
 	{ KEYC_F3|KEYC_SHIFT,	"\033[28~",	0 },
-	{ KEYC_F4|KEYC_SHIFT,	"\033[29~",	0 },
-	{ KEYC_F5|KEYC_SHIFT,	"\033[31~",	0 },
-	{ KEYC_F6|KEYC_SHIFT,	"\033[32~",	0 },
-	{ KEYC_F7|KEYC_SHIFT,	"\033[33~",	0 },
-	{ KEYC_F8|KEYC_SHIFT,	"\033[34~",	0 },
+	{ KEYC_F4|KEYC_SHIFT,	"\033[1;2S",	0 },
+	{ KEYC_F5|KEYC_SHIFT,	"\033[15;2~",	0 },
+	{ KEYC_F6|KEYC_SHIFT,	"\033[17;2~",	0 },
+	{ KEYC_F7|KEYC_SHIFT,	"\033[18;2~",	0 },
+	{ KEYC_F8|KEYC_SHIFT,	"\033[19;2~",	0 },
 	{ KEYC_IC,		"\033[2~",	0 },
 	{ KEYC_DC,		"\033[3~",	0 },
 	{ KEYC_HOME,		"\033[1~",	0 },

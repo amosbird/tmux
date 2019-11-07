@@ -1035,7 +1035,8 @@ status_prompt_key(struct client *c, key_code key)
 	key &= ~KEYC_XTERM;
 
 	keys = options_get_number(c->session->options, "status-keys");
-	if (keys == MODEKEY_VI) {
+	/* if (keys == MODEKEY_VI) { */
+	if (0) {
 		switch (status_prompt_translate_key(c, key, &key)) {
 		case 1:
 			goto process_key;
@@ -1233,19 +1234,39 @@ process_key:
 		break;
 	case '\r':
 	case '\n':
+	case '\r'|KEYC_ESCAPE:
 		s = utf8_tocstr(c->prompt_buffer);
 		if (*s != '\0')
 			status_prompt_add_history(s);
 		if (c->prompt_inputcb(c, c->prompt_data, s, 1) == 0)
 			status_prompt_clear(c);
 		free(s);
+		if (key == ('\r'|KEYC_ESCAPE))
+		{
+			struct cmd_parse_result	*pr;
+			struct cmdq_item* new_item;
+			pr = cmd_parse_from_string("send -X begin-selection", NULL);
+			new_item = cmdq_get_command(pr->cmdlist, NULL);
+			cmdq_append(c, new_item);
+			cmd_list_free(pr->cmdlist);
+		}
 		break;
 	case '\033': /* Escape */
+	case '\035':
 	case '\003': /* C-c */
 	case '\007': /* C-g */
 		if (c->prompt_inputcb(c, c->prompt_data, NULL, 1) == 0)
 			status_prompt_clear(c);
+		{
+			struct cmd_parse_result	*pr;
+			struct cmdq_item* new_item;
+			pr = cmd_parse_from_string("send -X cancel", NULL);
+			new_item = cmdq_get_command(pr->cmdlist, NULL);
+			cmdq_append(c, new_item);
+			cmd_list_free(pr->cmdlist);
+		}
 		break;
+	case 's'|KEYC_ESCAPE:
 	case '\022': /* C-r */
 		if (c->prompt_flags & PROMPT_INCREMENTAL) {
 			prefix = '-';

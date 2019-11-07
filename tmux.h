@@ -173,6 +173,7 @@ enum {
 
 	/* Paste brackets. */
 	KEYC_PASTE_START,
+	KEYC_PASTE_START2,
 	KEYC_PASTE_END,
 
 	/* Mouse keys. */

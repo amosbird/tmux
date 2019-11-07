@@ -383,6 +383,10 @@ server_next_session(struct session *s)
 	RB_FOREACH(s_loop, sessions, &sessions) {
 		if (s_loop == s)
 			continue;
+		if (0 == strcmp(s_loop->name, "amos")) {
+			s_out = s_loop;
+			break;
+		}
 		if (s_out == NULL ||
 		    timercmp(&s_loop->activity_time, &s_out->activity_time, <))
 			s_out = s_loop;
