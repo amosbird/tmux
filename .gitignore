@@ -19,3 +19,4 @@ configure
 tmux.1.*
 *.dSYM
 cmd-parse.c
+/compile_commands.json
