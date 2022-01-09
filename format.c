@@ -491,6 +491,9 @@ format_cb_host_short(__unused struct format_tree *ft)
 {
 	char host[HOST_NAME_MAX + 1], *cp;
 
+	cp = getenv("HOSTNAME");
+	if (cp != NULL && cp[0] != '\0')
+		return xstrdup(cp);
 	if (gethostname(host, sizeof host) != 0)
 		return (xstrdup(""));
 	if ((cp = strchr(host, '.')) != NULL)

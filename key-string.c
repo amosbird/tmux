@@ -364,6 +364,10 @@ key_string_lookup_key(key_code key, int with_flags)
 		s = "PasteStart";
 		goto append;
 	}
+	if (key == KEYC_PASTE_START2) {
+		s = "PasteStart2";
+		goto append;
+	}
 	if (key == KEYC_PASTE_END) {
 		s = "PasteEnd";
 		goto append;

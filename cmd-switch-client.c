@@ -110,8 +110,10 @@ cmd_switch_client_exec(struct cmd *self, struct cmdq_item *item)
 		else
 			s = NULL;
 		if (s == NULL) {
-			cmdq_error(item, "can't find last session");
-			return (CMD_RETURN_ERROR);
+			if ((s = session_next_session(tc->session)) == NULL) {
+				cmdq_error(item, "can't find next session");
+				return (CMD_RETURN_ERROR);
+			}
 		}
 	} else {
 		if (cmdq_get_client(item) == NULL)
@@ -122,8 +124,6 @@ cmd_switch_client_exec(struct cmd *self, struct cmdq_item *item)
 				server_redraw_window(w);
 			window_redraw_active_switch(w, wp);
 			window_set_active_pane(w, wp, 1);
-			if (window_pop_zoom(w))
-				server_redraw_window(w);
 		}
 		if (wl != NULL) {
 			session_set_current(s, wl);

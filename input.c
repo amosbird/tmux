@@ -93,7 +93,7 @@ struct input_ctx {
 	size_t			param_len;
 
 #define INPUT_BUF_START 32
-#define INPUT_BUF_LIMIT 1048576
+#define INPUT_BUF_LIMIT 10485760
 	u_char		       *input_buf;
 	size_t			input_len;
 	size_t			input_space;
