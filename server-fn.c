@@ -402,6 +402,10 @@ server_find_session(struct session *s,
 	struct session *s_loop, *s_out = NULL;
 
 	RB_FOREACH(s_loop, sessions, &sessions) {
+		if (0 == strcmp(s_loop->name, "amos")) {
+			s_out = s_loop;
+			break;
+		}
 		if (s_loop != s && (s_out == NULL || f(s_loop, s_out)))
 			s_out = s_loop;
 	}
