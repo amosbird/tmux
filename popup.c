@@ -268,6 +268,8 @@ popup_free_cb(struct client *c, void *data)
 	struct popup_data	*pd = data;
 	struct cmdq_item	*item = pd->item;
 
+	notify_client("popup-close", c);
+
 	if (pd->md != NULL)
 		menu_free_cb(c, pd->md);
 
@@ -722,6 +724,8 @@ popup_display(int flags, enum box_lines lines, struct cmdq_item *item, u_int px,
 
 	server_client_set_overlay(c, 0, popup_check_cb, popup_mode_cb,
 	    popup_draw_cb, popup_key_cb, popup_free_cb, popup_resize_cb, pd);
+
+	notify_client("popup-open", c);
 	return (0);
 }
 
